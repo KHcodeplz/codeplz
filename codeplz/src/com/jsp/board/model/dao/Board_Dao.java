@@ -38,12 +38,12 @@ public class Board_Dao {
 
 		try {
 			pstmt = con.prepareStatement(query);
-			System.out.println(board);
 			pstmt.setInt(1, board.getBoard_category_index());
 			pstmt.setString(2, board.getBoard_tags());
 			pstmt.setString(3, board.getBoard_title());
 			pstmt.setString(4, board.getBoard_content());
 			pstmt.setString(5, board.getBoard_file());
+			pstmt.setString(6, board.getBoard_writer());
 
 			result = pstmt.executeUpdate();
 
@@ -54,6 +54,37 @@ public class Board_Dao {
 		}
 
 		return result;
+	}
+	
+	public int getBoardIndex(Connection result, String writer, String title) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int index = 0;
+		
+		System.out.println(writer + ", " + title);
+		
+		String query = prop.getProperty("getBoardIndex");
+		
+		try {
+			pstmt = result.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, writer);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				index = rset.getInt("COL_BOARD_INDEX");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println(index);
+		
+		return index;
 	}
 
 	public ArrayList<Board> selectList(Connection result, int currentPage, int limit) {
@@ -184,4 +215,5 @@ public class Board_Dao {
 		
 		return num;
 	}
+
 }

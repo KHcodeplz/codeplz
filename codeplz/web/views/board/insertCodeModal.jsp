@@ -12,7 +12,7 @@
 				<form action="javascript: boardInsertCode();">
 					<select name="selectlang" id="selectlang">
 						<option value="java">java</option>
-						<option value="c">c</option>
+						<option value="cpp">c++</option>
 						<option value="python">python</option>
 					</select> <br /><br />
 					<textarea name="code" id="code" cols="100" rows="15" style="resize: none;"></textarea><br /> 

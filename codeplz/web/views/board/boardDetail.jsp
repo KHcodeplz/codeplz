@@ -11,6 +11,8 @@
 
 <script src="/codeplz/resources/js/syntaxhighlighter/shCore.js"></script>
 <script src="/codeplz/resources/js/syntaxhighlighter/shBrushJava.js"></script>
+<script src="/codeplz/resources/js/syntaxhighlighter/shBrushCpp.js"></script>
+<script src="/codeplz/resources/js/syntaxhighlighter/shBrushPython.js"></script>
 
 <link rel="stylesheet" href="/codeplz/resources/css/syntaxhighlighter/shCore.css" />
 <link rel="stylesheet" href="/codeplz/resources/css/syntaxhighlighter/shThemeDefault.css" />

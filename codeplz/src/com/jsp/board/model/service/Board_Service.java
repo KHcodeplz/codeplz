@@ -23,6 +23,16 @@ public class Board_Service {
 		
 		return result;
 	}
+	
+	public int getBoardIndex(String writer, String title) {
+		Connection result =getConnection();
+		
+		int index = new Board_Dao().getBoardIndex(result, writer, title);
+		
+		close(result);
+		
+		return index;
+	}
 
 	public ArrayList<Board> selectList(int currentPage, int limit){
 		Connection result = getConnection();

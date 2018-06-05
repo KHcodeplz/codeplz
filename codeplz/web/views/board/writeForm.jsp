@@ -56,7 +56,7 @@
 
 			<textarea name="content" id="content" style="display: none;"></textarea>
 
-			<button type="button" class="btn" id="boardInputBtn">등록하기</button>
+			<button type="button" class="btn" id="boardInputBtn" style="float: right;">등록하기</button>
 		</form>
 	</div>
 			
@@ -172,7 +172,7 @@
 	        	processData: false,
 				type: "post",
 				success: function(data) {
-					console.log("게시판리스트");
+					location.href = '/codeplz/board_detail.cp?index='+data;
 				}, error: function(data) {
 					console.log("실패!");
 				}
@@ -184,13 +184,25 @@
 			var $s = $('#summernote').summernote('code');
 
 			var code = $('#code').val();
-			console.log();
-
+			var codeArr = code.split("");
+			
+			for(var i = 0; i < codeArr.length; i++) {
+				if(codeArr[i] == '<') {
+					codeArr[i] = "&lt;";
+				} else if(codeArr[i] == '>') {
+					codeArr[i] = "&gt;"
+				}
+			}
+			
+			code = codeArr.join("");
+			
 			var node = document.createElement('pre');
-			node.setAttribute('class', 'brush: java');
+			node.setAttribute('class', 'brush: '+$('#selectlang').val());
 			node.innerHTML = code;
 
 			$('#summernote').summernote('insertNode', node);
+			
+			$('#code_modal').modal('hide');
 		}
 	</script>
 
