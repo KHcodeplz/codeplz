@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.jsp.board.model.vo.Board"%>
 
 <html>
 <head>
@@ -48,11 +48,24 @@
 					<input type="text" name="tags" id="tags" class="form-control" data-role="tagsinput" placeholder="태그를 등록해 주세요."/>
 				</div>
 				<div class="col-sm-4">
-					<input type="file" class="form-control" name="file" id="file" />
+					<div class="viewFile">
+					<% if(session.getAttribute("board") != null) { 
+					Board b = (Board)session.getAttribute("board");
+					if(b.getBoard_file() != null) {%>
+					<button class="btn" style="float:right;">변경</button>
+					<a href="/codeplz/upload/<%= b.getBoard_file() %>" download style="float:right;"><%= b.getBoard_file() %></a>			
+					<%}} %>
+					</div>
+					<!-- <input type="file" class="form-control" name="file" id="file" style="width:100%"/> -->
 				</div>
 			</div>
 			
-			<div id="summernote"></div>
+			<div id="summernote">
+			<% if(session.getAttribute("board") != null) { 
+				Board b = (Board)session.getAttribute("board");%>
+				<%= b.getBoard_content()%>
+			<%} %>
+			</div>
 
 			<textarea name="content" id="content" style="display: none;"></textarea>
 
@@ -66,7 +79,37 @@
 		
 		$(document).ready(function() {
 			$('#summernote').summernote();
+			
+			<% if(session.getAttribute("board") != null) { 
+				Board b = (Board)session.getAttribute("board");
+			%>
+				var category='';
+				if(<%=b.getBoard_category_index()%> == 1){
+					category = 'Q & A';	
+				} else if(<%=b.getBoard_category_index()%> == 2){
+					category = '정보';
+				} else if(<%=b.getBoard_category_index()%> == 3){
+					category = '잡담';
+				} else if(<%=b.getBoard_category_index()%> == 4){
+					category = '토론';
+				} else if(<%=b.getBoard_category_index()%> == 5){
+					category = '회사정보';
+				} else if(<%=b.getBoard_category_index()%> == 6){
+					category = '구인구직';
+				}
+				
+				$('#example button.dropdown-toggle').html(category + ' <span class="caret"></span>');
+				
+				<% String tagArr[] = b.getBoard_tags().split(","); 
+				
+				for(int i = 0; i < tagArr.length; i++) { %>
+					$('#tags').tagsinput('add', <%=tagArr[i]%>);
+				<%} %>
+				
+				$('#title').val('<%=b.getBoard_title()%>');
 
+			/* form_data.append('file',$('#file')[0].files[0]); */
+			<% } %>
 		});
 		
 		$('#example .dropdown-menu li > a').bind('click',

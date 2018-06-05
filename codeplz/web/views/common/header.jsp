@@ -5,7 +5,7 @@
 %>
 		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/codeplz.css?ver=13" />
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/codeplz.css?ver=1" />
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css" />
 	</head>
 	<body>
@@ -67,21 +67,21 @@
 				<ul class="list-unstyled components">
 				<!-- <p>Dummy Heading</p> -->
 					<li>
-						<a href="#">공지사항</a>
+						<a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=0">공지사항</a>
 					</li>
 					<li>
-						<a href="/codeplz/board_selectList.cp">Q & A</a>
+						<a href="<%=request.getContextPath()%>/selectList.cp?CategoryIndex=1">Q & A</a>
 					</li>
 					<li>
-						<a href="#">정보</a>
+						<a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=2">정보</a>
 					</li>
 					<li>
 						<a class="dropdown-toggle collapsed" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">커뮤니티</a>
 						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<li><a href="#">잡담</a></li>
-							<li><a href="#">토론</a></li>
-							<li><a href="#">회사정보</a></li>
-							<li><a href="#">구인구직</a></li>
+							<li><a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=3">잡담</a></li>
+							<li><a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=4">토론</a></li>
+							<li><a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=5">회사정보</a></li>
+							<li><a href="<%=request.getContextPath() %>/selectList.cp?CategoryIndex=6">구인구직</a></li>
 						</ul>
 					</li>
 				</ul>

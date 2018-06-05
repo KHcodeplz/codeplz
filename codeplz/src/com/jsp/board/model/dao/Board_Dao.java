@@ -87,54 +87,61 @@ public class Board_Dao {
 		return index;
 	}
 
-	public ArrayList<Board> selectList(Connection result, int currentPage, int limit) {
-		// Statement stmt = null;
-		PreparedStatement pstmt = null;
+	public ArrayList<Board> selectList(Connection result, int currentPage, int limit, int CategoryIndex) {
+	      // Statement stmt = null;
+	      PreparedStatement pstmt = null;
 
-		ResultSet rset = null;
-		ArrayList<Board> list = null;
+	      ResultSet rset = null;
+	      ArrayList<Board> list = null;
 
-		String sql = prop.getProperty("selectList");
+	      String sql = prop.getProperty("selectList");
 
-		System.out.println(sql);
+	      System.out.println(sql);
 
-		try {
+	      try {
+	        
+	         
+	         pstmt = result.prepareStatement(sql);
+	         
+	         
+	         
+	         //조회 시작할 행 번호와 마지막 행 번호 계산 
+	         int startRow = (currentPage - 1) * limit + 1;
+	         int endRow = startRow + limit - 1;
+	         
+	         pstmt.setInt(1, startRow);
+	         pstmt.setInt(2, endRow);
+	         pstmt.setInt(3, CategoryIndex);
+	         
+	         rset = pstmt.executeQuery();
+	          
+	         
+	         list = new ArrayList<Board>();
 
-			pstmt = result.prepareStatement(sql);
+	         while (rset.next()) {
+	            Board b = new Board();
+	            //넘버 타이틀 작성자 추천수 조회수
+	            b.setBoard_index(rset.getInt("COL_BOARD_INDEX"));
+	            b.setBoard_title(rset.getString("COL_BOARD_TITLE"));
+	            b.setBoard_writer(rset.getString("COL_USER_NICKNAME"));
+	            b.setBoard_hits(rset.getInt("COL_BOARD_HITS"));
+	            b.setBoard_category_index(rset.getInt("COL_BOARD_CATEGORY_INDEX"));
+	            b.setBoard_file(rset.getString("COL_BOARD_FILE"));
+	            list.add(b);
+	            
+	            System.out.println(b);
+	         }
 
-			// 조회 시작할 행 번호와 마지막 행 번호 계산
-			int startRow = (currentPage - 1) * limit + 1;
-			int endRow = startRow + limit - 1;
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         
+	         close(pstmt);
+	      }
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-
-			rset = pstmt.executeQuery();
-
-			list = new ArrayList<Board>();
-
-			while (rset.next()) {
-				Board b = new Board();
-				// 넘버 타이틀 작성자 추천수 조회수
-				b.setBoard_index(rset.getInt("COL_BOARD_INDEX"));
-				b.setBoard_title(rset.getString("COL_BOARD_TITLE"));
-				b.setBoard_writer(rset.getString("COL_USER_NICKNAME"));
-				b.setBoard_hits(rset.getInt("COL_BOARD_HITS"));
-				list.add(b);
-
-				System.out.println(b);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-
-			close(pstmt);
-		}
-
-		return list;
-	}
+	      return list;
+	   }
 
 	public int getListCount(Connection result) {
 		Statement stmt = null;
@@ -177,6 +184,7 @@ public class Board_Dao {
 			if(rset.next()){
 				b =  new Board();
 				b.setBoard_index(rset.getInt("COL_BOARD_INDEX"));
+				b.setBoard_category_index(rset.getInt("COL_BOARD_CATEGORY_INDEX"));
 				b.setBoard_tags(rset.getString("COL_BOARD_TAGS"));
 				b.setBoard_title(rset.getString("COL_BOARD_TITLE"));
 				b.setBoard_content(rset.getString("COL_BOARD_CONTENT"));
@@ -213,6 +221,26 @@ public class Board_Dao {
 			close(pstmt);
 		}
 		
+		return num;
+	}
+	
+	public int deleteBoard(Connection result, int index) {
+		PreparedStatement pstmt = null;
+		int num = 0;
+		String sql = prop.getProperty("boardDelete");
+
+		try {
+			pstmt = result.prepareStatement(sql);
+			pstmt.setInt(1, index);
+
+			num = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("last:"+num);
 		return num;
 	}
 

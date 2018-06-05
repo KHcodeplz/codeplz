@@ -18,17 +18,17 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 	int endPage = pi.getEndPage();
 %>
 	<script>
-		$(function(){
-			$("#listArea td").mouseenter(function() {
-				$(this).parent().css({ "cursor" : "pointer"});
-			}).mouseout(function() {
-				$(this).parent().css({});
-			}).click(function() {
-				var index = $(this).parent().find("input").val();
-				location.href="<%=request.getContextPath()%>/board_detail.cp?index="+index;
-				console.log(index);
+	$(function(){
+	      $("#listArea td").mouseenter(function(){
+	         $(this).parent().css({ "cursor" : "pointer"});
+	      }).mouseout(function(){
+	         $(this).parent().css({});
+	      }).click(function(){
+	         var index = $(this).parent().find("input").val();
+	         location.href="<%=request.getContextPath()%>/board_detail.cp?index="+index;
+	         console.log(index);
+	        });
 			});
-		});
 	</script>
 
 <div class="row">
@@ -48,16 +48,17 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 					<input type="radio" name="options" id="option1" autocomplete="off"
 					checked> 댓글순
 				</label>
-				
+			
 			</div>
 
 			<thead>
 				<tr>
-					<th scope="col" width="10%"></th>
+					<th scope="col" width="10%">번호</th>
 					<th scope="col" width="60%">제목</th>
 					<th scope="col" width="15%">작성</th>
 					<!-- 	<th scope="col" width="15%">추천수</th> -->
 					<th scope="col" width="15%">조회</th>
+
 				</tr>
 			</thead>
 			<%
@@ -68,14 +69,16 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 					<td scope="row"><%=b.getBoard_index()%>
 					<input type="hidden"  value="<%=b.getBoard_index()%>"/>
 					</td>
-					<td><%=b.getBoard_title()%></td>
+					<!-- 테그와 제목  -->
+					<td><%=b.getBoard_title()%>&nbsp;<%if(b.getBoard_tags()!=null){ %><%=b.getBoard_tags() %> <%} %></td>
+					
 					<td><%=b.getBoard_writer()%></td>
 					<%-- <td><%=b.getCol_board_count() %></td> 추천수 미구현--%>
 					<td><%=b.getBoard_hits()%></td>
 				</tr>
-			<%
-				}
-			%>
+				<%
+					}
+				%>
 
 			</tbody>
 		</table>
@@ -84,7 +87,8 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 		align="center"
 		onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp'">글 작성</button>
 </div>
-
+<!-- 페이징 처리할 부분 -->
+<!-- <br><br><br><br><br> -->
 <div class="pagingArea" align="center">
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=1'"
@@ -99,37 +103,22 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage - 1%>'"
 		class="btn btn-outline-light"><</button>
-	<%
-		}
-	%>
-
-	<%
-		for (int p = startPage; p <= endPage; p++) {
-			if (p == currentPage) {
-	%>
+	<%}%>
+	<% for (int p = startPage; p <= endPage; p++) {if (p == currentPage) {%>
 	<button disabled class="btn btn-outline-light"><%=p%></button>
-		<%
-			} else {
-		%>
+	<%} else {%>
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=p%>'"
 		class="btn btn-outline-light"><%=p%></button>
-		<%
-			}
-		}
-	
-		if (currentPage >= maxPage) {
-	%>
+	<%}%>
+	<%}%>
+	<%if (currentPage >= maxPage) {%>
 	<button disabled class="btn btn-outline-light">></button>
-	<%
-		} else {
-	%>
+	<%} else {%>
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage + 1%>'"
 		class="btn btn-outline-light">></button>
-	<%
-		}
-	%>
+	<%} %>
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=maxPage%>'"
 		class="btn btn-outline-light">>></button>
@@ -145,7 +134,20 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 		<option value="content">내용</option>
 	</select> <input type="search">
 	<button type="submit">검색하기</button>
+	-
+	<%--  <% if(m != null){ %> --%>
 	
+	<%-- <% } %> --%>
+
 </div>
+
+
+<!-- <div class="line"></div> -->
+
+<!-- <div class="jumbotron index_jumbotron">
+				<h1 class="text-center">CodePlz</h1>
+				<br />
+				<p class="text-center"><a class="btn btn-primary" href="#" role="button">들어가기</a></p>
+			</div> -->
 
 <%@ include file="../common/footer.jsp"%>

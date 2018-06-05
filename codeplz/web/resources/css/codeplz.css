@@ -248,7 +248,38 @@ a.article, a.article:hover {
     margin: 5px auto;
 }
 
+/* sang ho  */
 
+#boardInfo {
+   border: 1px solid lightgray;
+   background: white;
+}
+
+.content-form {
+   height: auto;
+   position: relative; 
+   border: 1px solid lightgray; 
+   background: white;
+   width: 100%; 
+   margin-bottom: 10px;
+}
+
+.detail_textarea {
+   width: 100%; 
+   height: auto;
+   margin-top: 10px;
+   resize: none;
+}
+
+.comment-content {
+   width: 100%;
+}
+#panel-body {
+   padding: 0;
+}
+
+
+/* sang ho */
 
 
 /* ---------------------------------------------------
@@ -283,4 +314,6 @@ a.article, a.article:hover {
         transform: rotate(-45deg) translate(1px, -1px);
     }
 }
+
+
 

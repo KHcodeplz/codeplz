@@ -13,7 +13,7 @@ import com.jsp.board.model.service.Board_Service;
 import com.jsp.board.model.vo.Board;
 import com.jsp.board.model.vo.PageInfo;
 
-@WebServlet("/board_selectList.cp")
+@WebServlet("/selectList.cp")
 public class Board_SelectList_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -24,7 +24,8 @@ public class Board_SelectList_Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Board> list = null;
 	      Board_Service bService = new Board_Service();
-	      
+	      int CategoryIndex =Integer.parseInt(request.getParameter("CategoryIndex"));
+	      System.out.println(CategoryIndex);
 	      System.out.println("servlet 확인");
 	      // -- 페이지 처리 코드 부분 -- //
 	      
@@ -86,7 +87,7 @@ public class Board_SelectList_Servlet extends HttpServlet {
 	      // list = bService.selectList();
 	      
 	      // 페이지 처리를 수행할 경우
-	      list = bService.selectList(currentPage, limit);
+	      list = bService.selectList(currentPage, limit,CategoryIndex);
 	      System.out.println(list);
 	      
 	      String page="";
@@ -95,9 +96,14 @@ public class Board_SelectList_Servlet extends HttpServlet {
 	         request.setAttribute("pi", pi);
 	         request.setAttribute("list", list);
 	      } 
+//	      else {
+////	         page="views/common/errorPage.jsp";
+////	         request.setAttribute("msg", "게시판 조회 실패!!");
+//	      }
 	      
 	      request.getRequestDispatcher(page)
 	      .forward(request, response);
+	      
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

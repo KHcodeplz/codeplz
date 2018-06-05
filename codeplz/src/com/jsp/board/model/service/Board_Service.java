@@ -34,16 +34,15 @@ public class Board_Service {
 		return index;
 	}
 
-	public ArrayList<Board> selectList(int currentPage, int limit){
+	public ArrayList<Board> selectList(int currentPage, int limit ,int CategoryIndex){
 		Connection result = getConnection();
 		
-		ArrayList<Board> list = new Board_Dao().selectList(result, currentPage , limit);
+		ArrayList<Board> list = new Board_Dao().selectList(result, currentPage , limit, CategoryIndex);
 		
 		System.out.println(list);
-		
 		close(result);
-		
 		return list;
+		
 	}
 
 	public int getListCount() {
@@ -71,5 +70,17 @@ public class Board_Service {
 		else rollback(result);
 		
 		return b;
+	}
+	
+	public int deleteBoard(int index) {
+		Connection result = getConnection();
+		int num= new Board_Dao().deleteBoard(result,index);
+		
+		if(num== 1) 
+			commit(result);
+		else rollback(result);
+		
+
+		return num;
 	}
 }
