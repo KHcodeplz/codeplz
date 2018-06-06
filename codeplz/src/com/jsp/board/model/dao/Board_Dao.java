@@ -56,6 +56,32 @@ public class Board_Dao {
 		return result;
 	}
 	
+	public int updateBoard(Connection con, Board board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("updateBoard");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board.getBoard_category_index());
+			pstmt.setString(2, board.getBoard_tags());
+			pstmt.setString(3, board.getBoard_title());
+			pstmt.setString(4, board.getBoard_content());
+			pstmt.setString(5, board.getBoard_file());
+			pstmt.setInt(6, board.getBoard_index());
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	public int getBoardIndex(Connection result, String writer, String title) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -109,9 +135,9 @@ public class Board_Dao {
 	         int startRow = (currentPage - 1) * limit + 1;
 	         int endRow = startRow + limit - 1;
 	         
-	         pstmt.setInt(1, startRow);
-	         pstmt.setInt(2, endRow);
-	         pstmt.setInt(3, CategoryIndex);
+	         pstmt.setInt(1, CategoryIndex);
+	         pstmt.setInt(2, startRow);
+	         pstmt.setInt(3, endRow);
 	         
 	         rset = pstmt.executeQuery();
 	          
@@ -143,8 +169,8 @@ public class Board_Dao {
 	      return list;
 	   }
 
-	public int getListCount(Connection result) {
-		Statement stmt = null;
+	public int getListCount(Connection result, int CategoryIndex) {
+		PreparedStatement pstmt = null;
 
 		int listCount = 0;
 		ResultSet rset = null;
@@ -152,8 +178,9 @@ public class Board_Dao {
 		String sql = prop.getProperty("listCount");
 
 		try {
-			stmt = result.createStatement();
-			rset = stmt.executeQuery(sql);
+			pstmt = result.prepareStatement(sql);
+			pstmt.setInt(1, CategoryIndex);
+			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
 				listCount = rset.getInt(1);
@@ -161,7 +188,7 @@ public class Board_Dao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt);
+			close(pstmt);
 			close(rset);
 		}
 		

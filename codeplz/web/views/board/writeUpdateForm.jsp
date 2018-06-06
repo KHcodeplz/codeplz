@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.jsp.board.model.vo.Board"%>
-
+<%
+	Board board = (Board)session.getAttribute("board");
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -48,21 +50,25 @@
 					<input type="text" name="tags" id="tags" class="form-control" data-role="tagsinput" placeholder="태그를 등록해 주세요."/>
 				</div>
 				<div class="col-sm-4">
+					<div class="viewFile" style="display:none">
+						<button type="button" class="btn updateFile-btn" style="float:right;">변경</button>
+						<a href="/codeplz/upload/<%= board.getBoard_file() %>" download style="float:right;"><%= board.getBoard_file() %></a>					
+					</div>
 					<input type="file" class="form-control" name="file" id="file" style="width:100%"/>
 				</div>
 			</div>
 			
-			<div id="summernote"></div>
+			<div id="summernote"><%= board.getBoard_content()%></div>
 
 			<textarea name="content" id="content" style="display: none;"></textarea>
 
-			<button type="button" class="btn" id="boardInputBtn" style="float: right;">등록하기</button>
+			<button type="button" class="btn" id="boardUpdateBtn" style="float: right;">수정하기</button>
 		</form>
 	</div>
 			
 	<script>
 		
-		var categoryIndex = <%=request.getParameter("CategoryIndex")%>;
+		var categoryIndex = <%=board.getBoard_category_index()%>;
 		var category = '';
 		
 		$(document).ready(function() {
@@ -82,7 +88,25 @@
 				category = "구인구직";
 			}
 			
+			$('#title').val('<%=board.getBoard_title()%>');
+			
 			$('#example button.dropdown-toggle').html(category + ' <span class="caret"></span>');
+			
+			<% if(board.getBoard_tags() != null ) {
+         		String[] tagArr = board.getBoard_tags().split(",");
+         		for (int i = 0; i < tagArr.length; i++) { %>
+         		$('#tags').tagsinput('add', '<%=tagArr[i]%>');
+         	<% }}%>
+         	
+         	<% if(board.getBoard_file() != null ) { %>
+         		$('.viewFile').css('display', '');
+         		$('#file').css('display','none');
+         	<% } %>
+		});
+		
+		$('.updateFile-btn').on('click',function(){
+			$('.viewFile').css('display','none');
+			$('#file').css('display','');
 		});
 		
 		$('#example .dropdown-menu li > a').bind('click',
@@ -169,7 +193,7 @@
 	    }
 		
 		
-		$('#boardInputBtn').on('click', function() {
+		$('#boardUpdateBtn').on('click', function() {
 			$('#content').val($('#summernote').summernote('code'));
 			
 			var form_data = new FormData();
@@ -180,7 +204,7 @@
 			form_data.append('file',$('#file')[0].files[0]);
 			
 			$.ajax({
-				url: "/codeplz/board_insert.cp",
+				url: "/codeplz/board_update.cp",
 				data: form_data, 
 				cache: false,
 	        	contentType: false,

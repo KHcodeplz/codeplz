@@ -49,8 +49,8 @@ public class Board_SelectList_Servlet extends HttpServlet {
 	          = Integer.parseInt(request.getParameter("currentPage"));
 	      }
 	      
-	      // 전체 게시글의 수
-	      int listCount = bService.getListCount();
+	      // 카테고리별 전체 게시글의 수
+	      int listCount = bService.getListCount(CategoryIndex);
 	      
 	      System.out.println("총 게시글 수 : "+listCount);
 	      
@@ -87,12 +87,12 @@ public class Board_SelectList_Servlet extends HttpServlet {
 	      // list = bService.selectList();
 	      
 	      // 페이지 처리를 수행할 경우
-	      list = bService.selectList(currentPage, limit,CategoryIndex);
+	      list = bService.selectList(currentPage, limit, CategoryIndex);
 	      System.out.println(list);
 	      
 	      String page="";
 	      if(list != null){
-	         page ="views/board/boardList.jsp";
+	         page ="views/board/boardList.jsp?CategoryIndex="+CategoryIndex;
 	         request.setAttribute("pi", pi);
 	         request.setAttribute("list", list);
 	      } 

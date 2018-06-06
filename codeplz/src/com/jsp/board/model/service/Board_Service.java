@@ -12,9 +12,21 @@ public class Board_Service {
 
 	public int insertBoard(Board board) {
 		Connection con = getConnection();
+
+		int result = new Board_Dao().insertBoard(con, board);
 		
-		Board_Dao bdao = new Board_Dao();
-		int result = bdao.insertBoard(con, board);
+		if(result == 1) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+	
+	public int updateBoard(Board board) {
+		Connection con = getConnection();
+		
+		int result = new Board_Dao().updateBoard(con, board);
 		
 		if(result == 1) commit(con);
 		else rollback(con);
@@ -45,10 +57,10 @@ public class Board_Service {
 		
 	}
 
-	public int getListCount() {
+	public int getListCount(int CategoryIndex) {
 		Connection result =getConnection();
 		
-		int listCount = new Board_Dao().getListCount(result);
+		int listCount = new Board_Dao().getListCount(result, CategoryIndex);
 		
 		close(result);
 		
@@ -69,6 +81,8 @@ public class Board_Service {
 		if(num > 0) commit(result);
 		else rollback(result);
 		
+		close(result);
+		
 		return b;
 	}
 	
@@ -80,6 +94,7 @@ public class Board_Service {
 			commit(result);
 		else rollback(result);
 		
+		close(result);
 
 		return num;
 	}

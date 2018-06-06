@@ -16,6 +16,7 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	int CategoryIndex = Integer.parseInt(request.getParameter("CategoryIndex"));
 %>
 	<script>
 	$(function(){
@@ -85,13 +86,13 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 	</div>
 	<button type="button" class="btn btn-outline-lightline-secondary"
 		align="center"
-		onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp'">글 작성</button>
+		onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp?CategoryIndex=<%= CategoryIndex%>'">글 작성</button>
 </div>
 <!-- 페이징 처리할 부분 -->
 <!-- <br><br><br><br><br> -->
 <div class="pagingArea" align="center">
 	<button
-		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=1'"
+		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=1&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light"><<</button>
 	<%
 		if (currentPage <= 1) {
@@ -101,14 +102,14 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 		} else {
 	%>
 	<button
-		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage - 1%>'"
+		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage - 1%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light"><</button>
 	<%}%>
 	<% for (int p = startPage; p <= endPage; p++) {if (p == currentPage) {%>
 	<button disabled class="btn btn-outline-light"><%=p%></button>
 	<%} else {%>
 	<button
-		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=p%>'"
+		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=p%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light"><%=p%></button>
 	<%}%>
 	<%}%>
@@ -116,11 +117,11 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 	<button disabled class="btn btn-outline-light">></button>
 	<%} else {%>
 	<button
-		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage + 1%>'"
+		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage + 1%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light">></button>
 	<%} %>
 	<button
-		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=maxPage%>'"
+		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=maxPage%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light">>></button>
 </div>
 <br>

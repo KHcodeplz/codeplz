@@ -32,11 +32,9 @@ public class Board_Detail_Servlet extends HttpServlet {
 		System.out.println(b);
 		String page= "";
 		if(b !=null){
-			
 			page="views/board/boardDetail.jsp";
 			request.setAttribute("b", b);
 			request.setAttribute("cList", cList);
-			
 		}else{
 			
 		}

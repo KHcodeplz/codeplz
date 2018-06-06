@@ -47,7 +47,7 @@
 							</p>
 							<p>Tier : </p>
 							<p>Exp : </p>
-							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath() %>/mypage.cp'">My Page</button>
+							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath() %>/mypage.cp?user=<%=user.getUser_nickname()%>'">My Page</button>
 							<button type="button" class="btn signout-btn" onclick="signout();">Sign Out</button>
 						</div>
 					</div>

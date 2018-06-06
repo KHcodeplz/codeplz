@@ -2,7 +2,7 @@
    pageEncoding="UTF-8" import="com.jsp.board.model.vo.*, java.util.*"%>
 <%
 	Board b = (Board)request.getAttribute("b"); 
-ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute("cList");
+	ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute("cList");
 %>
 <html>
 <head>
@@ -25,59 +25,7 @@ ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute
 
 <%@ include file="../common/header.jsp"%>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('fieldset').on('keyup', 'textarea', function(e) {
-			$(this).css('height', 'auto');
-			$(this).height(this.scrollHeight);
-		});
-		
-		$('fieldset').find('textarea').keyup();
-		
-		$('#ModifyComment').on('keyup', 'textarea', function(e) {
-			$(this).css('height', 'auto');
-			$(this).height(this.scrollHeight);
-		});
-		
-	    $('#ModifyComment').find('textarea').keyup();
-	});
-   
-	SyntaxHighlighter.defaults['smart-tabs'] = true; // 탭 사이즈를 자동조절   
-	SyntaxHighlighter.all();
-   
-	$('.btn-modify').on('click', function() {
-		<% session.setAttribute("board", b); %>
-		location.href = "/codeplz/views/board/writeForm.jsp";
-	});
-	
-	function updateReply(obj){
-		   $(obj).parent().parent().prev().find('article').removeAttr('readonly');
-			$(obj).css('display','none');  
-			$(obj).siblings('.updateConfirm').css('display','inline');
-			$(obj).parent().parent().find("#ModifyComment").css('display','block');
-			$(obj).parent().parent().find("#firstComment").css('display','none');
-	   }
-	function updateComfirm(obj){
-		   var content = $(obj).parent().parent().find("#ModifyComment").val();
-		   
-		   var cIndex =$(obj).siblings('.cIndex').val();
-		   
-		   var bIndex = '<%=b.getBoard_index()%>';
-		   
-		   location.href="/codeplz/update_Comment.cp?cIndex="+cIndex +"&bIndex="+bIndex+"&content="+content;
-		   
-	   }
-	   function deleteReply(obj){
-		   
-	 		var cIndex =$(obj).siblings('.cIndex').val();
-		   
-		   var bIndex = '<%=b.getBoard_index()%>';
-		   
-		   location.href="/codeplz/delete_Comment.cp?cIndex="+cIndex+"&bIndex="+bIndex;
-	   }
-</script>
-
-<h3><a href="/codeplz/board_selectList.cp"><%=b.getBoard_category_index() %></a></h3>
+<h3><a href="/codeplz/selectList.cp?CategoryIndex=<%=b.getBoard_category_index() %>"><%=b.getBoard_category_index() %></a></h3>
 <div class="col-12" class="panel panel-default clearfix">
    <div class="panel-heading clearfix" id="boardInfo">
       <div class="avatar avatar-medium clearfix pull-left">
@@ -105,17 +53,22 @@ ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute
    <div class="content-container clearfix">
 		<div class="panel-body content-body pull-left content-form">
 			<a href="#"><%=b.getBoard_writer()%></a>(티어)
+			<% if(b.getBoard_file() != null) {%>
+				<a href="/codeplz/upload/<%= b.getBoard_file() %>" download style="float:right;"><%= b.getBoard_file() %></a>	
+			<% } %>				
 			<hr />
 			<article class="content-text" ><%=b.getBoard_content()%></article>
 		</div>
 		<br />
 		<br />
+		<button class="pull-right btn btn-success" onclick="viewBack();">목록보기</button>
 	<!-- 게시판 작성자와 유저 아이디가 같을떄 -->
 		<%if (user != null && user.getUser_nickname().equals(b.getBoard_writer())) {%>
 		
 		<button class="btn-delete pull-right btn btn-success" onclick="location.href='/codeplz/delete.cp?BIndex=<%=b.getBoard_index()%>'">삭제하기</button>
 		<button class="btn-modify pull-right btn btn-success">수정하기</button>
 		<%}%>
+		
 	</div>
 
    <br /><br /><br />
@@ -214,5 +167,63 @@ ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute
 
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('fieldset').on('keyup', 'textarea', function(e) {
+			$(this).css('height', 'auto');
+			$(this).height(this.scrollHeight);
+		});
+		
+		$('fieldset').find('textarea').keyup();
+		
+		$('#ModifyComment').on('keyup', 'textarea', function(e) {
+			$(this).css('height', 'auto');
+			$(this).height(this.scrollHeight);
+		});
+		
+	    $('#ModifyComment').find('textarea').keyup();
+	});
+   
+	SyntaxHighlighter.defaults['smart-tabs'] = true; // 탭 사이즈를 자동조절   
+	SyntaxHighlighter.all();
+   
+	$('.btn-modify').on('click', function() {
+		<% session.setAttribute("board", b); %>
+		location.href = "/codeplz/views/board/writeUpdateForm.jsp";
+	});
+	
+	function updateReply(obj){
+		   $(obj).parent().parent().prev().find('article').removeAttr('readonly');
+			$(obj).css('display','none');  
+			$(obj).siblings('.updateConfirm').css('display','inline');
+			$(obj).parent().parent().find("#ModifyComment").css('display','block');
+			$(obj).parent().parent().find("#firstComment").css('display','none');
+	   }
+	
+	function updateComfirm(obj){
+		   var content = $(obj).parent().parent().find("#ModifyComment").val();
+		   
+		   var cIndex =$(obj).siblings('.cIndex').val();
+		   
+		   var bIndex = '<%=b.getBoard_index()%>';
+		   
+		   location.href="/codeplz/update_Comment.cp?cIndex="+cIndex +"&bIndex="+bIndex+"&content="+content;
+		   
+	   }
+	
+	   function deleteReply(obj){
+		   
+	 		var cIndex =$(obj).siblings('.cIndex').val();
+		   
+		   var bIndex = '<%=b.getBoard_index()%>';
+		   
+		   location.href="/codeplz/delete_Comment.cp?cIndex="+cIndex+"&bIndex="+bIndex;
+	   }
+	   
+	   function viewBack(){
+		      var back = document.referrer;
+		      location.href = back;
+		};
+</script>
 
 <%@ include file="../common/footer.jsp"%>
