@@ -89,8 +89,7 @@ public class User_Dao {
 				 * COL_USER_NICKNAME : 2
 				 * COL_USER_NAME : 3
 				 * COL_USER_TIER_INDEX : 4
-				 * COL_USER_IS_CERTIFIED : 5
-				 * COL_USER_IS_LEAVED : 6
+				 * COL_USER_IS_LEAVED : 5
 				 * 
 				 * */
 				
@@ -98,8 +97,7 @@ public class User_Dao {
 				result.setUser_nickname(rset.getString(2));
 				result.setUser_name(rset.getString(3));
 				result.setUser_tier_index(rset.getInt(4));
-				result.setUser_is_certified(rset.getInt(5) == 1 ? true : false);
-				result.setUser_is_certified(rset.getInt(6) == 1 ? true : false);
+				result.setUser_is_leaved(rset.getInt(5) == 1 ? true : false);
 				
 				System.out.println("signin dao result : " + result);
 			}

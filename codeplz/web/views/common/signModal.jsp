@@ -62,7 +62,8 @@
 									<label class="control-label" for="signup_user_id">ID:</label><p></p>
 									<div class="controls">
 										<input type="email" class="form-control input-large" id="signup_user_id" name="user_id" placeholder="codeplz@example.com" onblur="signup_id_Check();" required>
-										<div id="signup_user_id_message" style="display: none;"></div>
+										<br />
+										<button type="button" class="btn btn-success" id="signup_user_id_auth_btn" style="display: none; float: right;" onclick="signup_id_Auth();">이메일 인증</button><div id="signup_user_id_message" style="display: none;"></div>
 									</div>
 								</div>
 								<br />

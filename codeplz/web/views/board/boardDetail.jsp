@@ -3,6 +3,20 @@
 <%
 	Board b = (Board)request.getAttribute("b"); 
 	ArrayList<Board_Comment> cList = (ArrayList<Board_Comment>) request.getAttribute("cList");
+	
+	int rindex = -1;
+	   String reply_num = request.getParameter("rindex");
+	   // 마이 페이지에서 번호를 받은 rindex값 처리 if else 문
+	   // 마이 페이지에선 &rindex로 댓글번호를 보내고
+	   // 마이 페이지가 아닌 다른 창에서는 null 이기에
+	   // int형 으로 -1로 하고 null 이 아니라면 
+	   // int형으로 변환시켜 0부터 들어가니 커서위치를 잡기수월하게
+	   // 하기위해 추가했습니다.
+	   if ( reply_num == null ) {
+	      rindex = -1;
+	   } else {
+	      rindex = Integer.parseInt(reply_num);
+	   }
 %>
 <html>
 <head>
@@ -79,7 +93,7 @@
 			<li class="list-group-item note-title">
 				<h3 class="panel-title">댓글</h3>
 			</li>
-				<%
+				<% if (rindex == -1) {
 					if (cList != null) {
 						for (Board_Comment bco : cList) {
 				%>
@@ -122,8 +136,50 @@
 						
 				</div>
 				<%} %>
-			 <%}} %>
+			 <%}}} else { %>
+			 	<% 	if (cList != null) {
+						for (Board_Comment bco : cList) {
+				%>
+			<li class="list-group-item note-item clearfix">
+			
+				<div class="content-body panel-body pull-left" id="panel-body">
+					<div class="avatar avatar-medium clearfix">
+						<div class="avatar-info">
+							<a href="#"><%=bco.getReply_writer()%> </a>(티어) <input
+								type="hidden" name="name" /> <input type="hidden" name="writer" />
+							<div class="date-created">
+								<p id="p">
+									<span class="timeago"><%=bco.getReply_inserted_date()%></span>&nbsp;작성&nbsp;&nbsp;
+									<% if(bco.getReply_modified_date()!=null) {%>
+									<span class="timeago"><%=bco.getReply_modified_date()%></span>&nbsp;수정됨
+									<%} %>
+								</p>
+							</div>
+						</div>
+					</div>
 					
+					<fieldset class="form">
+						<article class="list-group-item-text note-text" id="firstComment" name="replyContent"
+							name="" readonly="readonly"><%=bco.getReply_content()%>
+						</article>
+					</fieldset>
+				</div>
+				
+					<textarea class="comment-content form-control" placeholder="내용을 입력하세요." id="ModifyComment"
+						style="display:none;" ><%=bco.getReply_content()%>
+						</textarea>
+				<!-- 커맨트 작성자와 유저 아이디가 같을떄 -->
+				<%if(user.getUser_nickname().equals(bco.getReply_writer())){ %>
+				<div class="content-function-cog note-submit-buttons clearfix">
+						
+						<input type="submit" class="btn btn-success btn-wide pull-right" id="Comment_DeleteBnt"  value="삭제"  onclick="deleteReply(this);"/>
+						<input type="submit" class="btn btn-success btn-wide pull-right" id="Comment_ModifyBnt" value="수정"  onclick="updateReply(this);"/>
+						<input type="submit" class="updateConfirm  btn btn-success btn-wide pull-right" id="Comment_ModifyBnt" value="완료"  onclick="updateComfirm(this);" style="display:none;"/>
+						<input type="hidden" class="cIndex" " value="<%=bco.getReply_index()%>"/>
+						
+				</div>
+				<%} %>
+			 <%}} } %>		
 			</li>
 
 			<%if(session.getAttribute("user") == null){ %>

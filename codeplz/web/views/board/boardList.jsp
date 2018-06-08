@@ -84,9 +84,12 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 			</tbody>
 		</table>
 	</div>
-	<button type="button" class="btn btn-outline-lightline-secondary"
-		align="center"
-		onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp?CategoryIndex=<%= CategoryIndex%>'">글 작성</button>
+	<% if(CategoryIndex == 0) {%>
+	<% 	if( user.getUser_nickname().equals("관리자")) {%> 
+	<button type="button" class="btn btn-outline-lightline-secondary" align="center" onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp?CategoryIndex=<%= CategoryIndex%>'">글 작성</button>
+	<% } }else { %>
+	<button type="button" class="btn btn-outline-lightline-secondary" align="center" onclick="location.href='<%=request.getContextPath()%>/views/board/writeForm.jsp?CategoryIndex=<%= CategoryIndex%>'">글 작성</button>
+	<% } %>
 </div>
 <!-- 페이징 처리할 부분 -->
 <!-- <br><br><br><br><br> -->

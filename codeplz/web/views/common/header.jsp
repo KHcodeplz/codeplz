@@ -6,7 +6,7 @@
 		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/codeplz.css?ver=1" />
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css" />
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css?ver=1" />
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -47,7 +47,7 @@
 							</p>
 							<p>Tier : </p>
 							<p>Exp : </p>
-							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath() %>/mypage.cp?user=<%=user.getUser_nickname()%>'">My Page</button>
+							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath() %>/mypage.cp?user=<%=user.getUser_nickname()%>&index=0'">My Page</button>
 							<button type="button" class="btn signout-btn" onclick="signout();">Sign Out</button>
 						</div>
 					</div>

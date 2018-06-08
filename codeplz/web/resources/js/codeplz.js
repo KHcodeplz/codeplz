@@ -1,23 +1,39 @@
 // 회원가입 체크 영역
 
 var signup_id_check = false;
+var signup_id_auth_check = false;
 var signup_password_check = false;
 var signup_password2_check = false;
 var signup_nickname_check = false;
 var signup_name_check = false;
 
+var signup_id_auth_window = null; // auth 인증 자식 창
+
 function signup_init() {
 	signup_id_check = false;
+	signup_id_auth_check = false;
 	signup_password_check = false;
 	signup_password2_check = false;
 	signup_nickname_check = false;
 	signup_name_check = false;
 	
+	signup_id_auth_window = null;
+	
 	$('#signup_user_id').val("");
+	$('#signup_user_id_message').css('display', 'none');
+	$('#signup_user_id_auth_btn').css('display', 'none');
+	
 	$('#signup_user_password').val("");
+	$('#signup_user_password_message').css('display', 'none');
+	
 	$('#signup_user_password2').val("");
+	$('#signup_user_password2_message').css('display', 'none');
+	
 	$('#signup_user_nickname').val("");
+	$('#signup_user_nickname_message').css('display', 'none');
+	
 	$('#signup_user_name').val("");
+	$('#signup_user_name_message').css('display', 'none');
 }
 
 function signup_id_Check() {
@@ -27,9 +43,11 @@ function signup_id_Check() {
 	
 	if (input_id == "" || input_id == null) {
 		signup_id_check = false;
+		$('#signup_user_id_auth_btn').css('display', 'none');
 		$('#signup_user_id_message').text('필수 정보입니다.');
 	} else if (!regExp.test(input_id)) { // 정규 표현식이 일치하지 않으면
 		signup_id_check = false;
+		$('#signup_user_id_auth_btn').css('display', 'none');
 		$('#signup_user_id_message').text('이메일 양식을 확인해 주세요.');
 	} else {
 		$.ajax({
@@ -44,16 +62,26 @@ function signup_id_Check() {
 				
 				if (data) {
 					signup_id_check = false;
+					$('#signup_user_id_auth_btn').css('display', 'none');
 					$('#signup_user_id_message').text('이미 사용중인 ID입니다.');
 				} else {
 					signup_id_check = true;
-					$('#signup_user_id_message').text('사용 가능한 ID입니다.');
+					$('#signup_user_id_message').css('display', 'none');
+					$('#signup_user_id_auth_btn').css('display', '');
 				}
-				
 			}
 		});
 	}
 	$('#signup_user_id_message').css("display","");
+}
+
+function signup_id_Auth() {
+	var id = $('#signup_user_id').val();
+	console.log(id);
+	signup_id_auth_window = window.open('/codeplz/views/common/signupAuth.jsp', 'asdf', 'left=200, top=200, width=640, height=480, scrollbars=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+	signup_id_auth_window.onload = function() {
+		signup_id_auth_window.document.getElementById('signup_auth_user_id').value = id;
+	};
 }
 
 function signup_password_Check() {
@@ -152,6 +180,9 @@ function signup_submit() {
 		$('#signup_user_id_message').text("값을 확인해주세요.");
 		$('#signup_user_id_message').css("display", "");
 		$('#signup_user_id').focus();
+	} else if (!signup_id_auth_check) {
+		alert('이메일 인증을 완료해주세요!');
+		$('#signup_user_id_auth_btn').focus();
 	} else if (!signup_password_check) {
 		$('#signup_user_password_message').text("값을 확인해주세요.");
 		$('#signup_user_password_message').css("display", "");

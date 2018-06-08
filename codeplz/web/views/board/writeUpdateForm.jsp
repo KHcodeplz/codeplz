@@ -32,6 +32,9 @@
 								------ <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
+							<% if(user.getUser_nickname().equals("관리자")) {%>
+								<li><a>공지사항</a></li>
+							<% } %>
 								<li><a>Q & A</a></li>
 								<li><a>정보</a></li>
 								<li><a>잡담</a></li>
@@ -74,7 +77,9 @@
 		$(document).ready(function() {
 			$('#summernote').summernote();
 			
-			if(categoryIndex == 1){
+			if(categoryIndex == 0) {
+				category = "공지사항";
+			} else if(categoryIndex == 1){
 				category = "Q &amp; A";
 			} else if(categoryIndex == 2){
 				category = "정보";
@@ -114,7 +119,9 @@
 				category = $(this).html();
 				$('#example button.dropdown-toggle').html(category + ' <span class="caret"></span>');
 				
-				if(category == "Q &amp; A"){
+				if(category == "공지사항") {
+					categoryIndex == 0;
+				} else if(category == "Q &amp; A"){
 					categoryIndex = 1;
 				} else if(category == "정보"){
 					categoryIndex = 2;

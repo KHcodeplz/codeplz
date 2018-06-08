@@ -36,7 +36,7 @@ public class User_SignUp_Servlet extends HttpServlet {
 		User_Service uService = new User_Service();
 		
 		if (uService.singUp(user) != 0) {
-			response.sendRedirect("codeplz/index.jsp");
+			response.sendRedirect("index.jsp");
 		} else {
 			view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			request.setAttribute("errorMsg", "알 수 없는 오류로 인한 회원 가입 실패!");
