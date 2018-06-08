@@ -22,7 +22,7 @@ public class User_SignIn_Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = null;
 		HttpSession session = request.getSession(); // 기존에 있는 세션을 받아옴
-		
+				
 		EncryptUtil ec = new EncryptUtil();
 		
 		User_Vo session_User = (User_Vo)session.getAttribute("user"); // 세션의 유저 정보를 받아옴, 접속중 : not null
@@ -44,7 +44,7 @@ public class User_SignIn_Servlet extends HttpServlet {
 			
 			if ((user = uService.signIn(user)) != null) {
 				session.setAttribute("user", user);
-				response.sendRedirect("/codeplz/index.jsp");
+				response.sendRedirect("index.jsp");
 			} else {
 				view = request.getRequestDispatcher("views/common/errorPage.jsp");
 				request.setAttribute("errorMsg", "접속 실패! 아이디와 패스워드를 확인해주세요.");

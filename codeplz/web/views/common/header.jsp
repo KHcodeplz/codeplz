@@ -18,6 +18,7 @@
 				$('#logo_btn_top').on('click', function () {
 					location.href="/codeplz/index.jsp";
 				});
+				
 			});
 		</script>
 		
@@ -30,7 +31,7 @@
 						<ul class="list-unstyled CTAs">						
 							<li>
 								<!-- #signmodal has been signModal.jsp -->
-								<a class="btn login-btn" data-target="#signmodal" data-toggle="modal" onclick="signin_init();">로그인 / 회원가입</a>
+								<a class="btn sign-btn" id="sign-btn" data-target="#signmodal" data-toggle="modal">로그인 / 회원가입</a>
 							</li>
 						</ul>
 					</div>
@@ -47,8 +48,8 @@
 							</p>
 							<p>Tier : </p>
 							<p>Exp : </p>
-							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath() %>/mypage.cp?user=<%=user.getUser_nickname()%>&index=0'">My Page</button>
-							<button type="button" class="btn signout-btn" onclick="signout();">Sign Out</button>
+							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath()%>/mypage.cp?user=<%=user.getUser_nickname()%>&index=0'">My Page</button>
+							<button type="button" class="btn signout-btn" id="signout-btn">Sign Out</button>
 						</div>
 					</div>
 					<% } %>

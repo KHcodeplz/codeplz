@@ -30,9 +30,7 @@ public class User_SignUp_AuthSend_Servlet extends HttpServlet {
 		
 		Gson gson = new Gson();
 		
-		
-		
-		System.out.println("이메일 인증키 전송 서블릿 : " + to);
+//		System.out.println("이메일 인증키 전송 서블릿 : " + to);
 		Properties p = System.getProperties();
 		
 		p.put("mail.smtp.starttls.enable", "true");
@@ -47,15 +45,16 @@ public class User_SignUp_AuthSend_Servlet extends HttpServlet {
 		MimeMessage sendMessage = new MimeMessage(mail_Session);
 		
 		try {
-			String subject = "테스트입니다.";
+			String subject = "회원가입 인증 메일입니다.";
 			
 			EncryptUtil ec = new EncryptUtil();
 			
 			int rand_Num = new Random().nextInt(Integer.MAX_VALUE) + 1;
 			
-			System.out.println(rand_Num);
+//			System.out.println(rand_Num);
 			String auth_key = ec.encrypt(Integer.toString(rand_Num));
-			String text = "codeplz 인증키 : " + auth_key;
+			String text = "codeplz 회원가입 인증키입니다. <br />" + 
+							"<input type=\"text\" id=\"auth_key\" value=\"" + auth_key + "\" size=\"64\"readonly>";
 			
 			sendMessage.setSentDate(new Date()); // 날짜
 			

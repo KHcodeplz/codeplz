@@ -22,10 +22,10 @@ public class User_SignUp_AuthCheck_Servlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String auth_key = (String)session.getAttribute("auth_key");
 		String input = (String)request.getParameter("input");
-		System.out.println("현재 auth 키 : " + auth_key);
-		System.out.println("auth 체크 서블릿에서 전달받은 값 : " + input);
 		boolean result = auth_key.equals(input);
-		System.out.println("같은 지 ? " + result);
+//		System.out.println("현재 auth 키 : " + auth_key);
+//		System.out.println("auth 체크 서블릿에서 전달받은 값 : " + input);
+//		System.out.println("같은 지 ? " + result);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		

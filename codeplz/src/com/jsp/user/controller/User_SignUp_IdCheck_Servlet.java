@@ -10,24 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.jsp.user.model.service.User_Service;
 
-/**
- * Servlet implementation class User_SignUpIdCheckServlet
- */
 @WebServlet("/signup_id_Check.cp")
 public class User_SignUp_IdCheck_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public User_SignUp_IdCheck_Servlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean id_Check = false;
 		response.setContentType("application/json; charset=UTF-8");
@@ -47,11 +37,7 @@ public class User_SignUp_IdCheck_Servlet extends HttpServlet {
 		out.close();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

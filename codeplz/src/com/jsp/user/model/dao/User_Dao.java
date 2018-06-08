@@ -41,8 +41,6 @@ public class User_Dao {
 			 * COL_USER_AUTHENTICATION_KEY : 5
 			 * 
 			 * */
-			System.out.println(sql);
-			System.out.println(user);
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -53,9 +51,9 @@ public class User_Dao {
 			pstmt.setString(5, user.getUser_authentication_key());
 			
 			result = pstmt.executeUpdate();
-			
-			System.out.println("sqlresult = " + result);
-			
+//			
+//			System.out.println("sqlresult = " + result);
+//			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -99,7 +97,7 @@ public class User_Dao {
 				result.setUser_tier_index(rset.getInt(4));
 				result.setUser_is_leaved(rset.getInt(5) == 1 ? true : false);
 				
-				System.out.println("signin dao result : " + result);
+//				System.out.println("signin dao result : " + result);
 			}
 			
 		} catch (SQLException e) {

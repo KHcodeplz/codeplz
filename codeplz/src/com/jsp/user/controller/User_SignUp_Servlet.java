@@ -31,7 +31,7 @@ public class User_SignUp_Servlet extends HttpServlet {
 		
 		User_Vo user = new User_Vo(user_id, user_password, user_nickname, user_name, user_authentication_key);
 		
-		System.out.println("회원가입 서블렛 전달 받은 값 : " + user);
+//		System.out.println("회원가입 서블렛 전달 받은 값 : " + user);
 		
 		User_Service uService = new User_Service();
 		
@@ -42,8 +42,6 @@ public class User_SignUp_Servlet extends HttpServlet {
 			request.setAttribute("errorMsg", "알 수 없는 오류로 인한 회원 가입 실패!");
 			view.forward(request, response);
 		}
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

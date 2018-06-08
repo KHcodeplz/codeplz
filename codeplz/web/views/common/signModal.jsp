@@ -7,8 +7,8 @@
 			<br>
 			<div class="bs-example bs-example-tabs">
 				<ul id="myTab" class="nav nav-tabs">
-					<li class="active"><a href="#signin" data-toggle="tab" role="tab" onclick="signin_init(); signup_init()">Sign In</a></li>
-					<li class=""><a href="#signup" data-toggle="tab" role="tab" onclick="signup_init(); signin_init()">Sign Up</a></li>
+					<li class="active"><a href="#signin" id="tab_signin" data-toggle="tab" role="tab">Sign In</a></li>
+					<li class=""><a href="#signup" id="tab_signup" data-toggle="tab" role="tab">Sign Up</a></li>
 				</ul>
 			</div>
 			<div class="modal-body">
@@ -46,7 +46,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signin-btn"></label>
 									<div class="controls">
-										<button type="button" class="btn btn-success pull-right" id="signin-btn" name="signin-btn" onclick="signin_submit();">Sign In</button>
+										<button type="button" class="btn btn-success pull-right" id="signin-btn" name="signin-btn">Sign In</button>
 									</div>
 								</div>
 							</fieldset>
@@ -61,9 +61,9 @@
 								<div class="control-group">
 									<label class="control-label" for="signup_user_id">ID:</label><p></p>
 									<div class="controls">
-										<input type="email" class="form-control input-large" id="signup_user_id" name="user_id" placeholder="codeplz@example.com" onblur="signup_id_Check();" required>
+										<input type="email" class="form-control input-large" id="signup_user_id" name="user_id" placeholder="codeplz@example.com" required>
 										<br />
-										<button type="button" class="btn btn-success" id="signup_user_id_auth_btn" style="display: none; float: right;" onclick="signup_id_Auth();">이메일 인증</button><div id="signup_user_id_message" style="display: none;"></div>
+										<button type="button" class="btn btn-success" id="signup_user_id_auth_btn" style="display: none; float: right;">이메일 인증</button><div id="signup_user_id_message" style="display: none;"></div>
 									</div>
 								</div>
 								<br />
@@ -72,7 +72,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signup_user_password">Password:</label>
 									<div class="controls">
-										<input type="password" class="form-control input-large" id="signup_user_password" name="user_password" placeholder="********" onblur="signup_password_Check();" required>
+										<input type="password" class="form-control input-large" id="signup_user_password" name="user_password" placeholder="********" required>
 										<div id="signup_user_password_message" style="display: none;"></div>
 									</div>
 								</div>
@@ -82,7 +82,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signup_user_password2">Re-Enter Password:</label>
 									<div class="controls">
-										<input type="password" class="form-control input-large" id="signup_user_password2" name="user_password2" placeholder="********" onblur="signup_password2_Check();" required>
+										<input type="password" class="form-control input-large" id="signup_user_password2" name="user_password2" placeholder="********" required>
 										<div id="signup_user_password2_message" style="display: none;"></div>
 									</div>
 								</div>
@@ -92,7 +92,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signup_user_nickname">NickName:</label>
 									<div class="controls">
-										<input type="text" class="form-control input-large" id="signup_user_nickname" name="user_nickname" placeholder="한글(초성 제외) 또는 영어 또는 숫자로만 구성.(수정 불가능. 최대 255자)" onblur="signup_nickname_Check();" required>
+										<input type="text" class="form-control input-large" id="signup_user_nickname" name="user_nickname" placeholder="한글(초성 제외) 또는 영어 또는 숫자로만 구성.(수정 불가능. 최대 255자)" required>
 										<div id="signup_user_nickname_message" style="display: none;"></div>
 									</div>
 								</div>
@@ -101,7 +101,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signup_user_name">Name:</label>
 									<div class="controls">
-										<input type="text" class="form-control input-large" id="signup_user_name" name="user_name" placeholder="한글(초성 제외) 또는 영어(최대 255자)" onblur="signup_name_Check();" required>
+										<input type="text" class="form-control input-large" id="signup_user_name" name="user_name" placeholder="한글(초성 제외) 또는 영어(최대 255자)" required>
 										<div id="signup_user_name_message" style="display: none;"></div>
 									</div>
 								</div>
@@ -111,7 +111,7 @@
 								<div class="control-group">
 									<label class="control-label" for="signup-btn"></label>
 									<div class="controls">
-										<button type="button" class="btn btn-success pull-right" id="signup-btn" name="signup-btn" onclick="signup_submit();">Sign Up</button>
+										<button type="button" class="btn btn-success pull-right" id="signup-btn" name="signup-btn">Sign Up</button>
 									</div>
 								</div>
 							</fieldset>

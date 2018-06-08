@@ -9,7 +9,6 @@ public class User_Vo implements java.io.Serializable{
 	private String user_nickname;
 	private String user_name;
 	private int user_tier_index;
-	private boolean user_is_certified;
 	private boolean user_is_leaved;
 	private String user_authentication_key;
 	
@@ -25,7 +24,6 @@ public class User_Vo implements java.io.Serializable{
 		this.user_password = user_password;
 		this.user_nickname = user_nickname;
 		this.user_name = user_name;
-		this.user_is_certified = false;
 		this.user_is_leaved = false;
 		this.user_authentication_key = user_authentication_key;
 	}
@@ -37,7 +35,6 @@ public class User_Vo implements java.io.Serializable{
 		this.user_nickname = user_nickname;
 		this.user_name = user_name;
 		this.user_tier_index = user_tier_index;
-		this.user_is_certified = user_is_certified;
 		this.user_is_leaved = user_is_leaved;
 	}
 
@@ -81,13 +78,6 @@ public class User_Vo implements java.io.Serializable{
 		this.user_tier_index = user_tier_index;
 	}
 
-	public boolean isUser_is_certified() {
-		return user_is_certified;
-	}
-
-	public void setUser_is_certified(boolean user_is_certified) {
-		this.user_is_certified = user_is_certified;
-	}
 
 	public boolean isUser_is_leaved() {
 		return user_is_leaved;
@@ -103,10 +93,9 @@ public class User_Vo implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", user_password=" + user_password + ", user_nickname=" + user_nickname
-				+ ", user_name=" + user_name + ", user_tier_index=" + user_tier_index + ", user_is_certified="
-				+ user_is_certified + ", user_is_leaved=" + user_is_leaved + ", user_authentication_key="
-				+ user_authentication_key + "]";
+		return "User_Vo [user_id=" + user_id + ", user_password=" + user_password + ", user_nickname=" + user_nickname
+				+ ", user_name=" + user_name + ", user_tier_index=" + user_tier_index + ", user_is_leaved="
+				+ user_is_leaved + ", user_authentication_key=" + user_authentication_key + "]";
 	}
 
 	@Override
@@ -115,7 +104,6 @@ public class User_Vo implements java.io.Serializable{
 		int result = 1;
 		result = prime * result + ((user_authentication_key == null) ? 0 : user_authentication_key.hashCode());
 		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
-		result = prime * result + (user_is_certified ? 1231 : 1237);
 		result = prime * result + (user_is_leaved ? 1231 : 1237);
 		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
 		result = prime * result + ((user_nickname == null) ? 0 : user_nickname.hashCode());
@@ -142,8 +130,6 @@ public class User_Vo implements java.io.Serializable{
 			if (other.user_id != null)
 				return false;
 		} else if (!user_id.equals(other.user_id))
-			return false;
-		if (user_is_certified != other.user_is_certified)
 			return false;
 		if (user_is_leaved != other.user_is_leaved)
 			return false;
