@@ -77,7 +77,6 @@ public class User_SignUp_AuthSend_Servlet extends HttpServlet {
 			session.setAttribute("auth_key", auth_key);
 			
 			result = true;
-			
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} finally {

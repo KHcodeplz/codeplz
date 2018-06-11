@@ -9,7 +9,7 @@
 		<%@ include file="header.jsp" %>
 		
 		<%
-			String errorMsg = (String) request.getAttribute("errorMsg");
+			String errorMsg = (String)session.getAttribute("errorMsg");
 		%>
 		
 		<div class="row">

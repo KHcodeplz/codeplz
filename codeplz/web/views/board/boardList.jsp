@@ -108,9 +108,11 @@ import="com.jsp.board.model.vo.*, java.util.*" %>
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=currentPage - 1%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light"><</button>
 	<%}%>
+	
 	<% for (int p = startPage; p <= endPage; p++) {if (p == currentPage) {%>
 	<button disabled class="btn btn-outline-light"><%=p%></button>
 	<%} else {%>
+	
 	<button
 		onclick="location.href='<%=request.getContextPath()%>/selectList.cp?currentPage=<%=p%>&CategoryIndex=<%= CategoryIndex%>'"
 		class="btn btn-outline-light"><%=p%></button>

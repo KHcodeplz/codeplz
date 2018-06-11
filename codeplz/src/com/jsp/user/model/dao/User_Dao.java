@@ -173,4 +173,12 @@ public class User_Dao {
 		
 		return result;
 	}
+
+	public boolean dropOut(Connection con, User_Vo user) {
+		boolean result = false;
+		
+		
+		
+		return result;
+	}
 }

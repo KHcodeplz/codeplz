@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.common.secure.EncryptUtil;
 import com.jsp.user.model.service.User_Service;
@@ -21,6 +22,8 @@ public class User_SignUp_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = null;
+		HttpSession session = request.getSession();
+		String page = "errorPage.jsp";
 		EncryptUtil ec = new EncryptUtil();
 		
 		String user_id = request.getParameter("user_id");
@@ -36,16 +39,15 @@ public class User_SignUp_Servlet extends HttpServlet {
 		User_Service uService = new User_Service();
 		
 		if (uService.singUp(user) != 0) {
-			response.sendRedirect("index.jsp");
+			page = "index.jsp";
 		} else {
-			view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			request.setAttribute("errorMsg", "알 수 없는 오류로 인한 회원 가입 실패!");
-			view.forward(request, response);
+			session.setAttribute("errorMsg", "알 수 없는 오류로 인한 회원 가입 실패!");
 		}
+		
+		response.sendRedirect(page);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

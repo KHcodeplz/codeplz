@@ -32,6 +32,17 @@ public class User_Service {
 		
 		return result;
 	}
+	
+	public boolean dropOut(User_Vo user) {
+		Connection con = getConnection();
+		User_Dao uDao = new User_Dao();
+		
+		boolean result = uDao.dropOut(con, user);
+		
+		close(con);
+		
+		return result;
+	}
 
 	public boolean id_Check(String user_id) {
 		Connection con = getConnection();
@@ -54,4 +65,6 @@ public class User_Service {
 		
 		return result;
 	}
+	
+	
 }

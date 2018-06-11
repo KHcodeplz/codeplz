@@ -2,8 +2,12 @@
 <%@ page import="com.jsp.user.model.vo.*"%>
 <%
 	User_Vo user = (User_Vo)session.getAttribute("user");
+	boolean is_Admin = false;
+	
+	if (user != null && user.getUser_tier_index() == 9) {
+		is_Admin = true;
+	}
 %>
-		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/codeplz.css?ver=1" />
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css?ver=1" />
@@ -18,7 +22,6 @@
 				$('#logo_btn_top').on('click', function () {
 					location.href="/codeplz/index.jsp";
 				});
-				
 			});
 		</script>
 		
@@ -35,7 +38,6 @@
 							</li>
 						</ul>
 					</div>
-                	
                 	<% } else { %>
                 	<!-- 접속한 유저의 정보 출력 -->
 					<div>
@@ -46,12 +48,13 @@
 								<a class="news-btn" href="#"><span class="glyphicon glyphicon-bell"></span></a>
 								<span class="badge badge-pill badge-danger new-news">12</span>
 							</p>
-							<p>Tier : </p>
+							<p>Tier : <%=user.getUser_tier_index()%></p>
 							<p>Exp : </p>
 							<button type="button" class="btn mypage-btn" onclick="location.href='<%=request.getContextPath()%>/mypage.cp?user=<%=user.getUser_nickname()%>&index=0'">My Page</button>
 							<button type="button" class="btn signout-btn" id="signout-btn">Sign Out</button>
 						</div>
 					</div>
+					<br />
 					<% } %>
 					<div class="search-wraper">
   						<div class="input-group">
@@ -86,6 +89,17 @@
 						</ul>
 					</li>
 				</ul>
+				<% if (is_Admin) { %>
+				<ul class="list-unstyled components">
+					<li>
+						<a class="dropdown-toggle collapsed" href="#adminSubmenu" data-toggle="collapse" aria-expanded="false">관리자 페이지</a>
+						<ul class="collapse list-unstyled" id="adminSubmenu">
+							<li><a href="<%=request.getContextPath()%>/admin_check.cp?url=userControl">회원 관리</a></li>
+							<li><a href="<%=request.getContextPath()%>/admin_check.cp?url=adminChat">회원 관리</a></li>
+						</ul>
+					</li>
+				</ul>
+				<% } %>
 			</nav>
 			
 			<div id="content">	
