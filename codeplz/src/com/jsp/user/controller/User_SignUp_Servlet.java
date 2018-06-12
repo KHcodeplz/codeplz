@@ -1,6 +1,8 @@
 package com.jsp.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.common.secure.EncryptUtil;
+import com.google.gson.Gson;
 import com.jsp.user.model.service.User_Service;
 import com.jsp.user.model.vo.User_Vo;
 
@@ -23,7 +26,7 @@ public class User_SignUp_Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = null;
 		HttpSession session = request.getSession();
-		String page = "errorPage.jsp";
+		String page = "views/common/errorPage.jsp";
 		EncryptUtil ec = new EncryptUtil();
 		
 		String user_id = request.getParameter("user_id");
@@ -38,13 +41,19 @@ public class User_SignUp_Servlet extends HttpServlet {
 		
 		User_Service uService = new User_Service();
 		
-		if (uService.singUp(user) != 0) {
-			page = "index.jsp";
+		if (uService.singUp(user)) {
+			PrintWriter out = response.getWriter();
+			
+			Gson gs = new Gson();
+			
+			gs.toJson(true,out);
+			
+			out.flush();
+			out.close();
 		} else {
 			session.setAttribute("errorMsg", "알 수 없는 오류로 인한 회원 가입 실패!");
+			response.sendRedirect(page);
 		}
-		
-		response.sendRedirect(page);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

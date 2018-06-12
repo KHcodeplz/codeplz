@@ -79,9 +79,11 @@ public class User_Vo implements java.io.Serializable{
 	}
 
 
-	public boolean isUser_is_leaved() {
+	public boolean getUser_is_leaved() {
 		return user_is_leaved;
 	}
+	
+
 
 	public void setUser_is_leaved(boolean user_is_leaved) {
 		this.user_is_leaved = user_is_leaved;

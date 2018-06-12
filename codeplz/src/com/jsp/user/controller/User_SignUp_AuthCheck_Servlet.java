@@ -20,8 +20,8 @@ public class User_SignUp_AuthCheck_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String auth_key = (String)session.getAttribute("auth_key");
-		String input = (String)request.getParameter("input");
+		String auth_key = (String) session.getAttribute("auth_key");
+		String input = (String) request.getParameter("input");
 		boolean result = auth_key.equals(input);
 //		System.out.println("현재 auth 키 : " + auth_key);
 //		System.out.println("auth 체크 서블릿에서 전달받은 값 : " + input);

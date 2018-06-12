@@ -18,6 +18,14 @@ var signin_password_check = false;
 
 // 접속 체크 영역 변수 끝
 
+// 정보 수정 영역 체크 변수
+
+var user_modify_name_check = false;
+var user_modify_password_check = false;
+var user_modify_password2_check = false;
+
+// 정보 수정 영역 체크 변수 끝
+
 $(function() {
 	$('#tab_signin').on('click', function() {
 		// signin init
@@ -46,6 +54,7 @@ $(function() {
 		
 		$('#signup_user_password2').val("");
 		$('#signup_user_password2_message').css('display', 'none');
+		$('#signup_user_password2').removeAttr("disabled");
 		
 		$('#signup_user_nickname').val("");
 		$('#signup_user_nickname_message').css('display', 'none');
@@ -74,6 +83,7 @@ $(function() {
 		
 		$('#signup_user_password2').val("");
 		$('#signup_user_password2_message').css('display', 'none');
+		$('#signup_user_password2').removeAttr("disabled");
 		
 		$('#signup_user_nickname').val("");
 		$('#signup_user_nickname_message').css('display', 'none');
@@ -116,6 +126,7 @@ $(function() {
 		
 		$('#signup_user_password2').val("");
 		$('#signup_user_password2_message').css('display', 'none');
+		$('#signup_user_password2').removeAttr("disabled");
 		
 		$('#signup_user_nickname').val("");
 		$('#signup_user_nickname_message').css('display', 'none');
@@ -192,6 +203,7 @@ $(function() {
 		} else {
 			signup_password_check = true;
 			$('#signup_user_password_message').text("유효한 비밀번호 입니다.");
+			$('#signup_user_password2').removeAttr("disabled");
 		}
 		$('#signup_user_password_message').css("display","");
 	});
@@ -296,7 +308,17 @@ $(function() {
 			$('#signup_user_name').focus();
 		} else {
 			$('#signup_user_password2').attr("disabled", "true");
-			$('#signup_form').submit();
+			
+			$.ajax({
+				type: "post",
+				url: "/codeplz/signup.cp",
+				data: $('#signup_form').serialize(),
+				success: function (data) {
+					if (data) {
+						alert("회원가입 성공!");
+					}
+				}
+			});
 		}
 	});
 
@@ -310,9 +332,93 @@ $(function() {
 	});
 	// 접속 체크 영역 끝
 	 
+	
 	// 접속 해제 영역
 	$('#signout-btn').on('click', function() {
 		location.href="/codeplz/signout.cp";
 	});
 	// 접속 해제 영역 끝
+	
+	
+	// 회원정보 변경 영역
+	$('#userModify-btn').on('click', function() {
+		location.href="/codeplz/views/mypage/userModify.jsp"
+	});
+	
+	$('#password_submit').on('click', function() {
+		$('#form_password_check_for_modify').submit();
+	});
+	
+	$('#name_for_modify').on('blur', function() {
+		var reg_Exp = /^[가-힣a-zA-Z]{2,255}$/;
+		var input = $('#name_for_modify').val();
+		
+		if (reg_Exp.test(input)) {
+			user_modify_name_check = true;
+		} else {
+			user_modify_name_check = false;
+		}
+	});
+	
+	$('#password_for_modify').on('blur', function() {
+		var reg_Exp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/g;
+		var value = $('#password_for_modify').val();
+		
+		if (value == null || value == "" || reg_Exp.test(value)) {
+			user_modify_password_check = true;
+			$('#password_for_modify_message').text("유효한 비밀번호 입니다.");
+		} else {
+			user_modify_password_check = false;
+			$('#password_for_modify_message').text("변경을 원하시면 8~20자, 최소 1개의 대문자, 소문자, 특수문자를 포함해 입력해주세요.");
+		}
+	});
+	
+	$('#password2_for_modify').on('blur', function() {
+		var value1 = $('#password_for_modify').val();
+		var value2 = $('#password2_for_modify').val();
+		
+		if (value1 == value2) {
+			user_modify_password2_check = true;
+			$('#password2_for_modify_message').text("올바른 입력입니다.");
+		} else {
+			user_modify_password2_check = false;
+			$('#password2_for_modify_message').text("변경을 원하는 두 비밀번호가 같지 않습니다.");
+		}
+	});
+		
+	$('#user_info_modify_submit').on('click', function() {
+		if (!user_modify_password_check) {
+			$('#password_for_modify').focus();
+		} else if (!user_modify_password2_check) {
+			$('#password2_for_modify').focus();
+		} else if (!user_modify_name_check) {
+			$('#name_for_modify').focus();
+		} else {
+			$.ajax({
+				type: "post",
+				url: "/codeplz/usermodify.cp",
+				data: $('#user_info_form').serialize(),
+				success: function (data) {
+					if (data) {
+						alert('수정 성공');
+						location.href = '/codeplz/index.jsp';
+					}
+				}
+			});
+		}
+	});
+	
+	$('#user_dropout_submit').on('click', function() {
+		$.ajax({
+				type: "post",
+				url: "/codeplz/dropout.cp",
+				success: function (data) {
+					if (data) {
+						alert('탈퇴 완료');
+						location.href = '/codeplz/index.jsp';
+					}
+				}
+			});
+	})
+	// 회원정보 변경 영역 끝
 });

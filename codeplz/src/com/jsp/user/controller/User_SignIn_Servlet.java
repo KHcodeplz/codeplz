@@ -22,10 +22,10 @@ public class User_SignIn_Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = null;
 		HttpSession session = request.getSession(); // 기존에 있는 세션을 받아옴
-		String page = "errorPage.jsp";
+		String page = "views/common/errorPage.jsp";
 		EncryptUtil ec = new EncryptUtil();
 		
-		User_Vo session_User = (User_Vo)session.getAttribute("user"); // 세션의 유저 정보를 받아옴, 접속중 : not null
+		User_Vo session_User = (User_Vo) session.getAttribute("user"); // 세션의 유저 정보를 받아옴, 접속중 : not null
 		
 		System.out.println("session user : " + session_User);
 		
@@ -42,8 +42,14 @@ public class User_SignIn_Servlet extends HttpServlet {
 			User_Service uService = new User_Service();
 			
 			if ((user = uService.signIn(user)) != null) {
-				session.setAttribute("user", user);
-				page = "index.jsp";
+				
+				if (!user.getUser_is_leaved()) { 
+					session.setAttribute("user", user);
+					session.setAttribute("modify_Check", false);
+					page = "index.jsp";
+				} else {
+					session.setAttribute("errorMsg", "이미 탈퇴한 회원입니다!");
+				}
 			} else {
 				session.setAttribute("errorMsg", "접속 실패! 아이디와 패스워드를 확인해주세요.");
 			}

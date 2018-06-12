@@ -23,7 +23,7 @@ public class User_SignUp_AuthSend_Servlet extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String to = (String)request.getParameter("to_email");
+		String to = (String) request.getParameter("to_email");
 		boolean result = false;
 		
 		response.setContentType("application/json; charset=UTF-8");

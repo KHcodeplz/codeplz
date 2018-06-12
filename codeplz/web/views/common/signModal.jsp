@@ -55,7 +55,7 @@
 					
 					<!-- sign Up div -->
 					<div class="tab-pane fade" id="signup" >
-						<form class="form-horizontal" id="signup_form" action="/codeplz/signup.cp" method="post">
+						<form class="form-horizontal" id="signup_form">
 							<fieldset>
 								<!-- ID input : user_id -->
 								<div class="control-group">

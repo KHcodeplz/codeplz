@@ -8,13 +8,13 @@ import static com.common.connect.JDBCTemplate.*;
 
 public class User_Service {
 	
-	public int singUp(User_Vo user) {
+	public boolean singUp(User_Vo user) {
 		Connection con = getConnection();
 		User_Dao uDao = new User_Dao();
 		
-		int result = uDao.signUp(con, user);
+		boolean result = uDao.signUp(con, user);
 		
-		if (result > 0) commit(con);
+		if (result) commit(con);
 		else rollback(con);
 		
 		close(con);
@@ -39,6 +39,9 @@ public class User_Service {
 		
 		boolean result = uDao.dropOut(con, user);
 		
+		if (result) commit(con);
+		else rollback(con);
+		
 		close(con);
 		
 		return result;
@@ -60,6 +63,31 @@ public class User_Service {
 		User_Dao uDao = new User_Dao();
 		
 		boolean result = uDao.nickname_Check(con, user_nickname);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public boolean password_Check(User_Vo user) {
+		Connection con = getConnection();
+		User_Dao uDao = new User_Dao();
+		
+		boolean result = uDao.passowrd_Check(con, user);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public boolean modify(User_Vo user) {
+		Connection con = getConnection();
+		User_Dao uDao = new User_Dao();
+		
+		boolean result = uDao.modify(con, user);
+		
+		if (result) commit(con);
+		else rollback(con);
 		
 		close(con);
 		

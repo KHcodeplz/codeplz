@@ -1,94 +1,107 @@
 /* KYH START */
 .mypage-contains {
-	background: skyblue;
-	border : 1px solid blue;
-	display: inline-block;
+   background: skyblue;
+   border : 1px solid blue;
+   display: inline-block;
 }
 
 .mypage-contains > div {
-	position: relative;
-	display: inline-block;
+   position: relative;
+   display: inline-block;
 }
 
 .mypage-content-btn > button {
-	background : deeppink;
-	border : 1px solid lightgreen;
-	margin-left : 10px;
-	margin-right: 10px;
-	border-radius : 0.3em;
-	color : mintcream;
+   background : deeppink;
+   border : 1px solid lightgreen;
+   margin-left : 10px;
+   margin-right: 10px;
+   border-radius : 0.3em;
+   color : mintcream;
 }
 
+
 .mypage-wrap {
-	width: 100%;
-	padding: 10px;
+   width: 100%;
+   padding: 10px;
+   border-bottom: 1px solid white;
+   margin-botton: 1px;
 }
 
 .mypage-profile {
-	margin-bottom: 5px;
-	margin-top : 10px;
-	padding: 1px;
-	height : auto;
-	display: inline-block;
+   margin-bottom: 5px;
+   margin-top : 10px;
+   padding: 1px;
+   height : auto;
+   display: inline-block;
 }
 
 .mypage-profile > div {
-	margin: 10px;
+   margin: 10px;
+}
+
+.mypage-seg {
+   width: 80%;
+   display: inline-block;
 }
 
 .mypage-portfolio-wrap {
-	height: auto;
+   height: auto;
+   float: right;
+   display: inline-block;
+   padding: 10px;
+   width: 20%;
 }
 
 .mypage-img {
-	float: left;
+   float: left;
+   top: 20px;
+    position: relative;
 }
 
 .profile-img {
-	width : 100px;
-	height: 100px;
-	margin: 10px;
+   width : 100px;
+   height: 100px;
+   margin: 10px;
 }
 
 .portfolio_btn {
-	float: right;
+   float: right;
 }
 
 
 
 /* mypage content */
 .mypage-content {
-	width: 100%;
-	height: auto;
-	padding: 10px;
+   width: 100%;
+   height: auto;
+   padding: 10px;
 }
 
 .mypage-content-btn {
-	margin: 10px;
-	pading: 10px;
-	text-align: center;
-	width: 100%;
+   text-align: center;
+   width: 100%;
+   border-bottom: 1px solid white;
 }
 
 
 .mypage-content-title-wrap {
-	width: 100%;
-	height : 50px;
-	background : hotpink;
-	color: snow;
-	display: inline-block;
+   width: 100%;
+   height : 50px;
+   background : hotpink;
+   color: snow;
+   display: inline-block;
 }
 
 
 .mypage-content-title {
-	position: relative;
-	margin: 15px;
+   position: relative;
+   margin: 15px;
 }
 
 .mypage-content-body-wrap {
-	width: 100%;
-	background: snow;
-	padding: 5px;
+   width: 100%;
+   background: snow;
+   padding: 5px;
 }
 
 .mypage-content-body {
@@ -98,16 +111,16 @@
 }
 
 .line-sysday {
-	float: right;
-	position: relative;
-	top: -20px;
+   float: right;
+   position: relative;
+   top: -20px;
 }
 
 .mypage-table-line > td {
-	margin-right: 1px;
-	display: inline-block;
-	font-size: small;
-	padding: 1px;
+   margin-right: 1px;
+   display: inline-block;
+   font-size: small;
+   padding: 1px;
 }
 
 .mypage-table-line > .line-name {
@@ -116,34 +129,38 @@
 }
 
 .mypage-table-line > .line-day {
-	font-weight: bold;
+   font-weight: bold;
     color: blue;
 }
 
 .mypage-table-line > .line-board {
-	font-weight: bold;
+   font-weight: bold;
     color: blue;
 }
 
 
 /* media mobile */
 @media (max-width: 2000px) {
-	.mypage-contains  {
-		width: 100%; 
-		height: auto;
-	}
+   .mypage-contains  {
+      width: 100%; 
+      height: auto;
+   }
 }
 @media (max-width:768px) {
-	.mypage-contains  {
-		width: 100%; 
-		height: auto;
-	}
-	.mypage-contains > div  {
-		width: 100%; 
-		margin: auto;
-	}
-
-	
+   .mypage-contains  {
+      width: 100%; 
+      height: auto;
+   }
+   .mypage-contains > div  {
+      width: 100%; 
+      margin: auto;
+   }
+   .mypage-seg {
+      width: 100%;
+   }
+   .mypage-portfolio-wrap {
+      width: 100%;
+   }
 }
 
 

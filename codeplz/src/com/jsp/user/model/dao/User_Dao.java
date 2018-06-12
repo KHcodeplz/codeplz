@@ -23,10 +23,10 @@ public class User_Dao {
 		}
 	}
 	
-	public int signUp(Connection con, User_Vo user) {
+	public boolean signUp(Connection con, User_Vo user) {
 		PreparedStatement pstmt = null;
 		
-		int result = 0;
+		boolean result = false;
 
 		try {
 			String sql = prop.getProperty("signUp");
@@ -50,7 +50,7 @@ public class User_Dao {
 			pstmt.setString(4, user.getUser_name());
 			pstmt.setString(5, user.getUser_authentication_key());
 			
-			result = pstmt.executeUpdate();
+			if (pstmt.executeUpdate() > 0) result = true;
 //			
 //			System.out.println("sqlresult = " + result);
 //			
@@ -99,7 +99,6 @@ public class User_Dao {
 				
 //				System.out.println("signin dao result : " + result);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -174,10 +173,92 @@ public class User_Dao {
 		return result;
 	}
 
-	public boolean dropOut(Connection con, User_Vo user) {
+	public boolean dropOut(Connection con, User_Vo user) {	
+		PreparedStatement pstmt = null;
 		boolean result = false;
 		
+		String sql = prop.getProperty("dropOut");
 		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUser_id());
+			
+			if (pstmt.executeUpdate() > 0) {
+				result = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public boolean passowrd_Check(Connection con, User_Vo user) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		boolean result = false;
+		
+		String sql = prop.getProperty("password_Check");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUser_id());
+			pstmt.setString(2, user.getUser_password());
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				int temp = rset.getInt(1);
+				
+				if (temp != 0) {
+					result = true;
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public boolean modify(Connection con, User_Vo user) {
+		PreparedStatement pstmt = null;
+		boolean result = false;
+		
+		String sql = "";
+		
+		System.out.println("User Dao modify password : " + user.getUser_password());
+		
+		try {
+			if (user.getUser_password().equals("")) {
+				sql = prop.getProperty("modify_without_password");
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, user.getUser_name());
+				pstmt.setString(2, user.getUser_id());
+			} else {
+				sql = prop.getProperty("modify");
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, user.getUser_name());
+				pstmt.setString(2, user.getUser_password());
+				pstmt.setString(3, user.getUser_id());
+			}
+			
+			if (pstmt.executeUpdate() > 0) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return result;
 	}
